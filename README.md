@@ -6,13 +6,15 @@ Control your mouse pointer by moving your face. My algorithm uses pre-trained de
 ## Project Set Up and Installation
 1. Install OpenVINO 2020.1 here: https://docs.openvinotoolkit.org/latest/index.html
 2.  Install dependencies 
-
+    ```
     pip install -r requirements.txt
+    ```
 
 3. Download these models from Intel Open Zoo using *model downloader* from the toolkit:
 
+    ```
     sudo ./downloader.py --name MODEL-NAME -o OUTPUT-DIR
-
+    ```
 List of **MODEL-NAME**:
  - face-detection-adas-binary-0001 
  - head-pose-estimation-adas-0001
@@ -32,7 +34,7 @@ In the src directory, run 'python main.py' with the following params
 
 ## Documentation
 
-If you want to use webcam add -v cam 
+If you want to use webcam add ```-v cam``` 
 
 ## Benchmarks
 
