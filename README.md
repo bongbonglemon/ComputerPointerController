@@ -11,7 +11,7 @@ Control your mouse pointer by moving your face. My algorithm uses pre-trained de
 
 3. Download these models from Intel Open Zoo using *model downloader* from the toolkit:
 
-    sudo ./downloader.py --name <MODEL-NAME> -o <OUTPUT-DIR>
+    sudo ./downloader.py --name MODEL-NAME -o OUTPUT-DIR
 
 List of **MODEL-NAME**:
  - face-detection-adas-binary-0001 
