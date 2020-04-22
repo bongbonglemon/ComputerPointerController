@@ -15,7 +15,7 @@ class EyesDetect:
     '''
     Class for the Face Detection Model.
     '''
-    def __init__(self, model_name = "/Users/soymilk/edgeai/intel/landmarks-regression-retail-0009/FP32/landmarks-regression-retail-0009", device="CPU", threshold=0.60):
+    def __init__(self, model_name, output, device="CPU", threshold=0.60):
         '''
         TODO: Use this to set your instance variables.
         '''
@@ -25,6 +25,7 @@ class EyesDetect:
         self.device=device
         self.threshold=threshold
         self.exec_net=None
+        self.output=output
 
         try:
             self.model=IENetwork(self.model_structure, self.model_weights)
@@ -104,9 +105,10 @@ class EyesDetect:
         
         left_eye = self.get_eye(l_eye_x, l_eye_y, size, image)
         right_eye = self.get_eye(r_eye_x, r_eye_y, size, image)
-        
-        cv2.imwrite("left_eye.png", left_eye)
-        cv2.imwrite("right_eye.png", right_eye)
+
+        if self.output == True:
+            cv2.imwrite("left_eye.png", left_eye)
+            cv2.imwrite("right_eye.png", right_eye)
         return left_eye, right_eye
 
     

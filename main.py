@@ -36,6 +36,13 @@ def build_argparser():
                         help="Toggle prepared video or webcam stream.")
     parser.add_argument("-i", "--input", required=False, type=str,
                         help="Path to image or video file")
+    parser.add_argument("-d", "--device", required=False, default='CPU', type=str,
+                        help="Device to run on eg. CPU, VPU")
+    parser.add_argument("-o", "--output", required=False, action='store_true',
+                        help="Toggle print images of face, left and right eyes.")
+
+
+
 
     return parser
 
@@ -46,24 +53,24 @@ def main():
     """
     # Grab command line args
     args = build_argparser().parse_args()
-
+        
     start_time = time.time()
-    face_detector = FaceDetect(model_name=args.face)
+    face_detector = FaceDetect(model_name=args.face, device=args.device, output=args.output)
     face_detector.load_model()
     print("Time taken to load face detection model (in seconds):", time.time()-start_time)
 
     start_time = time.time()
-    eyes_detector = EyesDetect(model_name=args.eyes)
+    eyes_detector = EyesDetect(model_name=args.eyes, device=args.device, output=args.output)
     eyes_detector.load_model()
     print("Time taken to load landmark detection model (in seconds):", time.time()-start_time)
 
     start_time = time.time()
-    angle_detector = AngleDetect(model_name=args.angle)
+    angle_detector = AngleDetect(model_name=args.angle, device=args.device)
     angle_detector.load_model()
     print("Time taken to load head pose estimation model (in seconds):", time.time()-start_time)
 
     start_time = time.time()
-    gaze_detector = GazeDetect(model_name=args.gaze)
+    gaze_detector = GazeDetect(model_name=args.gaze, device=args.device)
     gaze_detector.load_model()
     print("Time taken to load gaze estimation model (in seconds):", time.time()-start_time)
 
@@ -72,12 +79,14 @@ def main():
     feed=InputFeeder(input_type=args.video, input_file=args.input)
     feed.load_data()
     for batch in feed.next_batch():
+        if batch is None: # catch last frame
+            break
         face = face_detector.predict(batch)
         left_eye, right_eye = eyes_detector.predict(face)
         angles = angle_detector.predict(face)
         x, y = gaze_detector.predict(left_eye, right_eye, angles)
         mouse_controller.move(x, y)
-        
+
     feed.close()
     
 

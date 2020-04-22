@@ -15,7 +15,7 @@ class FaceDetect:
     '''
     Class for the Face Detection Model.
     '''
-    def __init__(self, model_name = "/Users/soymilk/edgeai/intel/face-detection-adas-binary-0001/FP32-INT1/face-detection-adas-binary-0001", device="CPU", threshold=0.60):
+    def __init__(self, model_name, output, device="CPU", threshold=0.60):
         '''
         TODO: Use this to set your instance variables.
         '''
@@ -25,6 +25,7 @@ class FaceDetect:
         self.device=device
         self.threshold=threshold
         self.exec_net=None
+        self.output=output
 
         try:
             self.model=IENetwork(self.model_structure, self.model_weights)
@@ -96,5 +97,6 @@ class FaceDetect:
         w = right-left
         h = bottom-top
         crop_img = image[top:top+h, left:left+w]
-        cv2.imwrite("cropped_face.png", crop_img)
+        if self.output==True:
+            cv2.imwrite("cropped_face.png", crop_img)
         return crop_img

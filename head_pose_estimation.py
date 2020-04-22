@@ -15,7 +15,7 @@ class AngleDetect:
     '''
     Class for the Face Detection Model.
     '''
-    def __init__(self, model_name = "/Users/soymilk/edgeai/intel/head-pose-estimation-adas-0001/FP32/head-pose-estimation-adas-0001", device="CPU", threshold=0.60):
+    def __init__(self, model_name, device="CPU", threshold=0.60):
         '''
         TODO: Use this to set your instance variables.
         '''

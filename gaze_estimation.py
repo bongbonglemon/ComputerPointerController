@@ -15,7 +15,7 @@ class GazeDetect:
     '''
     Class for the Face Detection Model.
     '''
-    def __init__(self, model_name = "/Users/soymilk/edgeai/intel/gaze-estimation-adas-0002/FP32/gaze-estimation-adas-0002", device="CPU", threshold=0.60):
+    def __init__(self, model_name, device="CPU", threshold=0.60):
         '''
         TODO: Use this to set your instance variables.
         '''
